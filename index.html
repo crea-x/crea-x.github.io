@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanshu Jiang - 职业信息助手</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 25px;
+            border: 4px solid #4a6cf7;
+        }
+        
+        .profile-info h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+        
+        .profile-info p {
+            color: #718096;
+            margin-bottom: 5px;
+        }
+        
+        .main-content {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .chat-container {
+            flex: 1;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+        
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            background-color: #4a6cf7;
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .chat-header h2 {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .chat-header h2::before {
+            content: "🤖";
+            margin-right: 10px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.4;
+        }
+        
+        .bot-message {
+            align-self: flex-start;
+            background-color: #edf2f7;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background-color: #4a6cf7;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .chat-input {
+            padding: 20px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            outline: none;
+            font-size: 16px;
+        }
+        
+        .chat-input input:focus {
+            border-color: #4a6cf7;
+        }
+        
+        .chat-input button {
+            background-color: #4a6cf7;
+            color: white;
+            border: none;
+            border-radius: 24px;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        
+        .chat-input button:hover {
+            background-color: #3a5bd9;
+        }
+        
+        .chat-input button:disabled {
+            background-color: #a0aec0;
+            cursor: not-allowed;
+        }
+        
+        .examples-container {
+            width: 300px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+        
+        .examples-container h3 {
+            margin-bottom: 15px;
+            color: #2d3748;
+            font-size: 18px;
+        }
+        
+        .example-question {
+            padding: 12px;
+            background-color: #f7fafc;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-left: 3px solid #4a6cf7;
+        }
+        
+        .example-question:hover {
+            background-color: #edf2f7;
+        }
+        
+        .request-counter {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #718096;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            color: #718096;
+            font-style: italic;
+        }
+        
+        .typing-dots {
+            display: flex;
+            margin-left: 5px;
+        }
+        
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #718096;
+            margin: 0 2px;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .examples-container {
+                width: 100%;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="profile-img-placeholder">
+                <!-- 这里可以替换为您的实际照片 -->
+                <div class="profile-img" style="background-color: #e2e8f0; display: flex; align-items: center; justify-content: center; color: #a0aec0;">
+                    照片
+                </div>
+            </div>
+            <div class="profile-info">
+                <h1>Wanshu Jiang</h1>
+                <p>德国乌尔姆大学认知系统硕士</p>
+                <p>📍 德国乌尔姆，Manfred-Börner Straße 5</p>
+                <p>📞 +49 1624830759</p>
+                <p>📧 wanshu212@gmail.com</p>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h2>职业信息助手</h2>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">
+                        您好！我是您的职业信息助手。我可以回答关于Wanshu Jiang的教育背景、实习经历、项目经验和技能的问题。
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="userInput" placeholder="输入您的问题..." autocomplete="off">
+                    <button id="sendButton">发送</button>
+                </div>
+                <div class="request-counter" id="requestCounter">
+                    今日请求: 0/10
+                </div>
+            </div>
+            
+            <div class="examples-container">
+                <h3>示例问题</h3>
+                <div class="example-question" data-question="Wanshu Jiang的教育背景是什么？">
+                    Wanshu Jiang的教育背景是什么？
+                </div>
+                <div class="example-question" data-question="Wanshu Jiang有哪些实习经验？">
+                    Wanshu Jiang有哪些实习经验？
+                </div>
+                <div class="example-question" data-question="Wanshu Jiang掌握哪些编程语言？">
+                    Wanshu Jiang掌握哪些编程语言？
+                </div>
+                <div class="example-question" data-question="Wanshu Jiang在东南大学做了什么项目？">
+                    Wanshu Jiang在东南大学做了什么项目？
+                </div>
+                <div class="example-question" data-question="Wanshu Jiang会哪些语言？">
+                    Wanshu Jiang会哪些语言？
+                </div>
+                <div class="example-question" data-question="Wanshu Jiang在乌尔姆大学做什么工作？">
+                    Wanshu Jiang在乌尔姆大学做什么工作？
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 用户信息数据
+        const userInfo = `
+        Wanshu Jiang 简历
+        地址: Manfred-Börner Straße 5, 89081 Ulm, Germany
+        电话: +49 1624830759
+        邮箱: wanshu212@gmail.com
+        
+        教育背景:
+        10/2023–至今: 认知系统理学硕士, 乌尔姆大学, 乌尔姆, 德国
+        08/2019–07/2023: 生物医学工程理学学士(主修: 生物信息学), 东南大学, 南京, 中国
+        
+        实习经验:
+        05/2025–07/2025: 乌尔姆大学原子吸收信号数据分析助理, 乌尔姆, 德国
+        • 使用Python开发自动化工具链分析AAS信号(数据清洗、曲线拟合、参数提取)
+        • 使用并行化和批处理提高大数据集处理效率
+        • 编写流程文档并交付可集成到CI的脚本以提高可重用性
+        
+        07/2024–09/2024: "一带一路"信息分析与监控系统, 东南大学, 南京, 中国
+        • 基于Dify开发国际监控系统，用于收集、分析和可视化"一带一路"地区新闻
+        • 实现多源数据采集模块(RSS、JSON、API)、文本处理和可视化
+        • 实施基于LLM的管道，用于自动分类、内容分析和摘要生成
+        • 实现自动报告功能，包括每日/每周报告、热点分析和导出(PDF/Word)
+        • 开发前端用于管理分析任务、报告计划和警报规则
+        
+        项目经验:
+        04/2024–06/2024: 使用n8n和LLM的自动化发票处理
+        • 使用n8n自动化工作流监控和处理发票邮件，集成Microsoft 365、AI-API和SQL数据库
+        • 使用Google Gemini通过HTTP请求节点实现基于AI的管道，用于文档分类和从PDF发票中提取结构化数据
+        • 建立端到端流程，从邮件过滤和OCR处理到自动Excel导出
+        
+        技术技能:
+        • 编程与脚本: Python, JavaScript, SQL, C++, MATLAB, PHP
+        • 框架与工具: React, Node.js, Git (CI/CD), n8n, Dify
+        • 数据分析与机器学习: TensorFlow, PyTorch, Pandas, Power BI
+        • 语言: 德语(流利), 英语(流利), 中文(母语)
+        `;
+
+        // 请求计数器
+        let requestCount = 0;
+        const maxRequests = 10;
+        
+        // DOM元素
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+        const requestCounter = document.getElementById('requestCounter');
+        const exampleQuestions = document.querySelectorAll('.example-question');
+        
+        // 更新请求计数器显示
+        function updateRequestCounter() {
+            requestCounter.textContent = `今日请求: ${requestCount}/${maxRequests}`;
+        }
+        
+        // 添加消息到聊天窗口
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // 显示打字指示器
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot-message typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = '正在思考<span class="typing-dots"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></span>';
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // 隐藏打字指示器
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+        
+        // 模拟API调用
+        function callAPI(question) {
+            return new Promise((resolve) => {
+                // 模拟API响应时间
+                setTimeout(() => {
+                    // 这里应该调用真实的API
+                    // 为了演示，我们使用一个简单的规则来生成回答
+                    
+                    const lowerQuestion = question.toLowerCase();
+                    let answer = "抱歉，我没有找到相关信息。";
+                    
+                    if (lowerQuestion.includes("教育") || lowerQuestion.includes("学历") || lowerQuestion.includes("学习")) {
+                        answer = "Wanshu Jiang目前正在乌尔姆大学攻读认知系统理学硕士学位(2023年10月至今)。在此之前，他于2019年8月至2023年7月在东南大学获得了生物医学工程理学学士学位，主修生物信息学。";
+                    } else if (lowerQuestion.includes("实习") || lowerQuestion.includes("工作") || lowerQuestion.includes("经验")) {
+                        answer = "Wanshu Jiang有两段实习经验：\n1. 2025年5月-7月：在乌尔姆大学担任原子吸收信号数据分析助理，开发了Python自动化工具链。\n2. 2024年7月-9月：在东南大学参与'一带一路'信息分析与监控系统项目，基于Dify开发了国际监控系统。";
+                    } else if (lowerQuestion.includes("项目") || lowerQuestion.includes("工程")) {
+                        answer = "Wanshu Jiang在2024年4月至6月参与了一个自动化发票处理项目，使用n8n和LLM技术开发了自动化工作流，集成了Microsoft 365、AI-API和SQL数据库，实现了从邮件过滤到自动Excel导出的端到端流程。";
+                    } else if (lowerQuestion.includes("技能") || lowerQuestion.includes("编程") || lowerQuestion.includes("语言")) {
+                        if (lowerQuestion.includes("编程")) {
+                            answer = "Wanshu Jiang掌握的编程语言包括：Python, JavaScript, SQL, C++, MATLAB, PHP。";
+                        } else if (lowerQuestion.includes("框架")) {
+                            answer = "Wanshu Jiang熟悉的框架与工具包括：React, Node.js, Git (CI/CD), n8n, Dify。";
+                        } else if (lowerQuestion.includes("数据") || lowerQuestion.includes("分析")) {
+                            answer = "Wanshu Jiang在数据分析与机器学习方面的技能包括：TensorFlow, PyTorch, Pandas, Power BI。";
+                        } else if (lowerQuestion.includes("语言") && !lowerQuestion.includes("编程")) {
+                            answer = "Wanshu Jiang掌握的语言有：德语(流利), 英语(流利), 中文(母语)。";
+                        } else {
+                            answer = "Wanshu Jiang的技术技能包括：\n- 编程与脚本: Python, JavaScript, SQL, C++, MATLAB, PHP\n- 框架与工具: React, Node.js, Git (CI/CD), n8n, Dify\n- 数据分析与机器学习: TensorFlow, PyTorch, Pandas, Power BI\n- 语言: 德语(流利), 英语(流利), 中文(母语)";
+                        }
+                    } else if (lowerQuestion.includes("乌尔姆") || lowerQuestion.includes("大学") || lowerQuestion.includes("aas")) {
+                        answer = "Wanshu Jiang在乌尔姆大学担任原子吸收信号数据分析助理，开发了Python自动化工具链用于AAS信号分析，包括数据清洗、曲线拟合和参数提取，并利用并行化和批处理技术提高大数据集处理效率。";
+                    } else if (lowerQuestion.includes("东南大学") || lowerQuestion.includes("一带一路")) {
+                        answer = "Wanshu Jiang在东南大学参与了'一带一路'信息分析与监控系统项目，基于Dify开发了国际监控系统，实现了多源数据采集、文本处理、可视化以及基于LLM的自动分类、内容分析和摘要生成功能。";
+                    } else if (lowerQuestion.includes("n8n") || lowerQuestion.includes("发票")) {
+                        answer = "Wanshu Jiang参与了自动化发票处理项目，使用n8n和LLM技术开发了自动化工作流，集成Microsoft 365、AI-API和SQL数据库，实现了基于Google Gemini的文档分类和结构化数据提取。";
+                    }
+                    
+                    resolve(answer);
+                }, 1500);
+            });
+        }
+        
+        // 处理用户问题
+        async function handleQuestion(question) {
+            if (requestCount >= maxRequests) {
+                addMessage("抱歉，今日请求次数已用完。请明天再试。");
+                return;
+            }
+            
+            // 显示用户消息
+            addMessage(question, true);
+            
+            // 清空输入框
+            userInput.value = '';
+            
+            // 显示打字指示器
+            showTypingIndicator();
+            
+            // 增加请求计数
+            requestCount++;
+            updateRequestCounter();
+            
+            try {
+                // 调用API
+                const answer = await callAPI(question);
+                
+                // 隐藏打字指示器
+                hideTypingIndicator();
+                
+                // 显示回答
+                addMessage(answer);
+            } catch (error) {
+                // 隐藏打字指示器
+                hideTypingIndicator();
+                
+                // 显示错误信息
+                addMessage("抱歉，发生了错误。请稍后再试。");
+                console.error("API调用错误:", error);
+            }
+        }
+        
+        // 发送按钮点击事件
+        sendButton.addEventListener('click', () => {
+            const question = userInput.value.trim();
+            if (question) {
+                handleQuestion(question);
+            }
+        });
+        
+        // 输入框回车事件
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const question = userInput.value.trim();
+                if (question) {
+                    handleQuestion(question);
+                }
+            }
+        });
+        
+        // 示例问题点击事件
+        exampleQuestions.forEach(example => {
+            example.addEventListener('click', () => {
+                const question = example.getAttribute('data-question');
+                userInput.value = question;
+                userInput.focus();
+            });
+        });
+        
+        // 初始化请求计数器
+        updateRequestCounter();
+    </script>
+</body>
+</html>
