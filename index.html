@@ -1,1 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanshu Jiang - Career Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="profile-section">
+                <div class="profile-image">
+                    <img src="https://via.placeholder.com/150" alt="Wanshu Jiang">
+                </div>
+                <div class="profile-info">
+                    <h1>Wanshu Jiang</h1>
+                    <p>Master of Science, Cognitive Systems</p>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Ulm, Germany</p>
+                        <p><i class="fas fa-phone"></i> +49 1624830759</p>
+                        <p><i class="fas fa-envelope"></i> wanshu212@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="tabs">
+                <button class="tab-btn active" data-tab="chat">Chat Assistant</button>
+                <button class="tab-btn" data-tab="resume">Resume</button>
+                <button class="tab-btn" data-tab="skills">Skills</button>
+            </nav>
+        </header>
 
+        <main class="main-content">
+            <div id="chat" class="tab-content active">
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h2>Career Assistant</h2>
+                        <p>Ask me anything about Wanshu's professional background</p>
+                    </div>
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message bot-message">
+                            <div class="message-content">
+                                <p>Hello! I'm Wanshu's career assistant. I can answer questions about his education, work experience, projects, and technical skills. How can I help you today?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <div class="example-questions">
+                            <p>Try asking:</p>
+                            <div class="example-buttons">
+                                <button class="example-btn">What is Wanshu's educational background?</button>
+                                <button class="example-btn">Tell me about his internship experiences</button>
+                                <button class="example-btn">What programming languages does he know?</button>
+                            </div>
+                        </div>
+                        <div class="input-area">
+                            <input type="text" id="userInput" placeholder="Type your question here...">
+                            <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resume" class="tab-content">
+                <!-- Resume content will be loaded here -->
+            </div>
+
+            <div id="skills" class="tab-content">
+                <!-- Skills content will be loaded here -->
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
