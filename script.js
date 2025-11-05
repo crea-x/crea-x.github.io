@@ -156,12 +156,12 @@ function loadResumeContent() {
                     <div class="timeline-content">
                         <h3>Bachelor of Science, Biomedical Engineering</h3>
                         <h4>Southeast University, Nanjing, VR China</h4>
-                        <p>Focus: Bioinformatics</p>
+                        <p>Fokus: Bioinformatik</p>
                     </div>
                 </div>
             </div>
             
-            <h2 class="section-title" style="margin-top: 40px;">Internship Experience</h2>
+            <h2 class="section-title" style="margin-top: 40px;">Praktikumserfahrung</h2>
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-date">05/2025–07/2025</div>
@@ -169,9 +169,9 @@ function loadResumeContent() {
                         <h3>HiWi für Analyse von Atomabsorptionssignaldaten</h3>
                         <h4>Universität Ulm, Ulm, Deutschland</h4>
                         <ul>
-                            <li>Developed automated Python toolchains for AAS signal analysis (data cleaning, curve fitting, parameter extraction)</li>
-                            <li>Used parallelization & batch processes to improve efficiency for large datasets</li>
-                            <li>Documented processes and delivered CI-ready scripts for reusability</li>
+                            <li>Entwickelte automatisierte Toolchains in Python zur Analyse von AAS-Signalen (Datenbereinigung, Kurvenanpassung, Parameterextraktion)</li>
+                            <li>Nutzung von Parallelisierung & Batch-Prozessen zur Effizienzsteigerung großer Datensätze</li>
+                            <li>Dokumentation der Abläufe und Übergabe als CI-fähige Skripte zur Wiederverwendbarkeit</li>
                         </ul>
                     </div>
                 </div>
@@ -181,26 +181,26 @@ function loadResumeContent() {
                         <h3>Belt and Road Informationsanalyse- und Monitoringsystem</h3>
                         <h4>Southeast University, Nanjing, VR China</h4>
                         <ul>
-                            <li>Developed international monitoring system based on Dify for collection, analysis and visualization of news in "Belt and Road" regions</li>
-                            <li>Implemented modules for multi-source data collection (RSS, JSON, API), text processing and visualization</li>
-                            <li>Implemented LLM-based pipeline for automatic classification, content analysis and summary creation</li>
-                            <li>Automatic reporting with daily/weekly reports, hotspot analysis and export (PDF/Word)</li>
-                            <li>Created frontend for managing analysis tasks, report plans and alert rules</li>
+                            <li>Internationales Monitoringsystem auf Dify-Basis entwickelt zur Sammlung, Analyse und Visualisierung von Nachrichten in "Belt and Road"-Regionen</li>
+                            <li>Module für Multi-Source-Datenerfassung (RSS, JSON, API), Textverarbeitung und Visualisierung umgesetzt</li>
+                            <li>LLM-basierte Pipeline zur automatischen Klassifikation, Inhaltsanalyse und Erstellung von Zusammenfassungen implementiert</li>
+                            <li>Automatisches Reporting mit täglichen/wöchentlichen Berichten, Hotspot-Analysen und Export (PDF/Word)</li>
+                            <li>Frontend zur Verwaltung von Analyseaufgaben, Reportplänen und Warnregeln ergestellt</li>
                         </ul>
                     </div>
                 </div>
             </div>
             
-            <h2 class="section-title" style="margin-top: 40px;">Project Experience</h2>
+            <h2 class="section-title" style="margin-top: 40px;">Projekterfahrung</h2>
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-date">04/2024–06/2024</div>
                     <div class="timeline-content">
-                        <h3>Automated Invoice Processing with n8n & LLM</h3>
+                        <h3>Automatisierte Rechnungsverarbeitung mit n8n & LLM</h3>
                         <ul>
-                            <li>Automatic n8n workflow for monitoring and processing invoice emails with Microsoft 365, AI APIs and SQL database</li>
-                            <li>Implementation of AI-based pipeline with Google Gemini via HTTP Request Node for document classification and structured data extraction from PDF invoices</li>
-                            <li>Built end-to-end process from email filtering and OCR processing to automatic Excel export</li>
+                            <li>Automatischer n8n-Workflow zur Überwachung und Verarbeitung von Rechnungs-E-Mails mit Microsoft 365, AI-APIs und SQL-Datenbank</li>
+                            <li>Implementierung einer KI-basierten Pipeline mit Google Gemini über HTTP Request Node zur Dokumentenklassifizierung und strukturierten Datenerfassung aus PDF-Rechnungen</li>
+                            <li>Aufbau eines End-to-End-Prozesses von E-Mail-Filterung und OCR-Verarbeitung bis zum automatischen Excel-Export</li>
                         </ul>
                     </div>
                 </div>
@@ -215,7 +215,7 @@ function loadSkillsContent() {
     
     skillsContent.innerHTML = `
         <div class="skills-section">
-            <h2 class="section-title">Technical Skills</h2>
+            <h2 class="section-title">Technische Fähigkeiten</h2>
             <div class="skills-grid">
                 <div class="skill-category">
                     <h3><i class="fas fa-code"></i> Programming & Scripting</h3>
@@ -248,11 +248,11 @@ function loadSkillsContent() {
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3><i class="fas fa-language"></i> Languages</h3>
+                    <h3><i class="fas fa-language"></i> Sprachen</h3>
                     <div class="skill-list">
-                        <span class="skill-tag">German (fluent)</span>
-                        <span class="skill-tag">English (fluent)</span>
-                        <span class="skill-tag">Chinese (native)</span>
+                        <span class="skill-tag">Deutsch (fließend)</span>
+                        <span class="skill-tag">Englisch (fließend)</span>
+                        <span class="skill-tag">Chinesisch (Muttersprache)</span>
                     </div>
                 </div>
             </div>
