@@ -2,11 +2,13 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main]  # 推送到 main 分支触发
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 关键：授予写入仓库的权限（避免权限不足）
 
     steps:
       - name: Checkout code
@@ -25,14 +27,11 @@ jobs:
       - name: Build project
         run: cd wanshu-chatbot && npm run build
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
         with:
-          # 关键修正：用 external_repository 代替 repository-name
-          external_repository: crea-x/crea-x.github.io
-          personal_token: ${{ secrets.DEPLOY_TOKEN }}
-          publish_dir: ./wanshu-chatbot/dist
-          publish_branch: main
-          force_orphan: false
-          user_name: 'github-actions[bot]'  # 提交时的用户名
-          user_email: 'github-actions[bot]@users.noreply.github.com'  # 提交时的邮箱
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # 用 GitHub 内置令牌（无需手动创建）
+          publish_dir: ./wanshu-chatbot/dist  # 构建后的文件目录
+          publish_branch: gh-pages  # 部署到 gh-pages 分支（自动创建）
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
