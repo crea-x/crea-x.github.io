@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+# 触发条件：当推送到 main 分支时自动运行
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest  # 使用 Ubuntu 系统运行工作流
+
+    steps:
+      # 步骤1：拉取代码到服务器
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 步骤2：安装 Node.js（匹配你的项目版本，建议 18+）
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: 'npm'  # 缓存 npm 依赖，加速构建
+
+      # 步骤3：安装项目依赖
+      - name: Install dependencies
+        run: npm install
+
+      # 步骤4：构建 React 项目（生成静态文件）
+      - name: Build project
+        run: npm run build
+        # 如果构建需要环境变量，在这里添加
+        # env:
+        #   REACT_APP_WORKER_URL: ${{ secrets.WORKER_URL }}
+
+      # 步骤5：部署到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          # 部署到你的 crea-x.github.io 仓库
+          repository-name: crea-x/crea-x.github.io
+          # 授权令牌（需要在 GitHub 仓库设置中添加）
+          personal_token: ${{ secrets.DEPLOY_TOKEN }}
+          # 要部署的文件目录（Vite 构建默认输出到 dist 文件夹）
+          publish_dir: ./dist
+          # 部署到目标仓库的 main 分支（用户级 Pages 通常用 main 分支）
+          publish_branch: main
