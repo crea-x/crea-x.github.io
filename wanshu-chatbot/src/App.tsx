@@ -4,12 +4,18 @@ import { Send, User, Bot, Sparkles } from 'lucide-react';
 const API_URL = 'https://wanshu-chatbot-api.creaaa304.workers.dev';
 const AUTH_TOKEN = '267864dbf70ea4be51026484f77aece0d2ebf3522385391dee574103393f4b8a'; 
 
+// 定义消息类型
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
 const App = () => {
   const [activeTab, setActiveTab] = useState('chat');
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]); // 添加类型注解
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null); // 添加类型注解
 
   const exampleQuestions = [
     "Was sind Wanshus technische Fähigkeiten?",
@@ -31,7 +37,8 @@ const App = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const sendMessage = async (text) => {
+  // 添加参数类型
+  const sendMessage = async (text?: string) => {
     const userMessage = text || input;
     if (!userMessage.trim()) return;
 
@@ -65,7 +72,8 @@ const App = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  // 添加事件参数类型
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     sendMessage();
   };
