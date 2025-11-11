@@ -1,46 +1,41 @@
 name: Deploy to GitHub Pages
 
-# 触发条件：当推送到 main 分支时自动运行
+# 触发条件：推送到 crea-x.github.io 仓库的 main 分支时运行
 on:
   push:
     branches: [main]
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest  # 使用 Ubuntu 系统运行工作流
+    runs-on: ubuntu-latest
 
     steps:
-      # 步骤1：拉取代码到服务器
+      # 步骤1：拉取整个 crea-x.github.io 仓库代码（包含子目录 wanshu-chatbot）
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 步骤2：安装 Node.js（匹配你的项目版本，建议 18+）
+      # 步骤2：安装 Node.js（18+ 版本）
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
-          cache: 'npm'  # 缓存 npm 依赖，加速构建
+          cache: 'npm'
+          cache-dependency-path: './wanshu-chatbot/package-lock.json'  # 指定依赖锁文件路径，确保缓存生效
 
-      # 步骤3：安装项目依赖
+      # 步骤3：进入 React 项目子目录，安装依赖
       - name: Install dependencies
-        run: npm install
+        run: cd wanshu-chatbot && npm install  # 关键：先进入子目录
 
-      # 步骤4：构建 React 项目（生成静态文件）
+      # 步骤4：构建 React 项目（输出到 wanshu-chatbot/dist）
       - name: Build project
-        run: npm run build
-        # 如果构建需要环境变量，在这里添加
-        # env:
-        #   REACT_APP_WORKER_URL: ${{ secrets.WORKER_URL }}
+        run: cd wanshu-chatbot && npm run build  # 进入子目录执行构建
 
-      # 步骤5：部署到 GitHub Pages
+      # 步骤5：部署子目录的 dist 文件夹到 GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          # 部署到你的 crea-x.github.io 仓库
-          repository-name: crea-x/crea-x.github.io
-          # 授权令牌（需要在 GitHub 仓库设置中添加）
-          personal_token: ${{ secrets.DEPLOY_TOKEN }}
-          # 要部署的文件目录（Vite 构建默认输出到 dist 文件夹）
-          publish_dir: ./dist
-          # 部署到目标仓库的 main 分支（用户级 Pages 通常用 main 分支）
-          publish_branch: main
+          repository-name: crea-x/crea-x.github.io  # 目标仓库（你的 Pages 仓库）
+          personal_token: ${{ secrets.DEPLOY_TOKEN }}  # 之前配置的令牌
+          publish_dir: ./wanshu-chatbot/dist  # 关键：指定构建后的文件目录（子目录下的 dist）
+          publish_branch: main  # Pages 仓库的部署分支（用户级 Pages 必须用 main）
+          force_orphan: false  # 保留仓库历史（如果想清空历史，可设为 true）

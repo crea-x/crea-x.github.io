@@ -193,7 +193,7 @@ function App() {
     try {
       // 调用Cloudflare Worker
       const response = await axios.post(
-        'https://your-worker-subdomain.your-account.workers.dev/chat',
+        'https://wanshu-chatbot-worker.creaaa304.workers.dev/chat',
         { query: input }
       );
 
