@@ -1,17 +1,412 @@
-<!-- crea-x.github.io/index.html -->
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wanshu Jiang's Chatbot</title>
-  <!-- 加载 React 构建后的 CSS（路径对应 vite.config.js 的配置） -->
-  <link rel="stylesheet" href="/assets/static/index-*.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanshu Jiang - Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#6366F1',
+                        accent: '#10B981',
+                        neutral: '#F3F4F6',
+                        dark: '#1F2937'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .scrollbar-hide {
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+        }
+    </style>
 </head>
-<body>
-  <!-- React 挂载节点（和 React 项目的 index.html 一致） -->
-  <div id="root"></div>
-  <!-- 加载 React 构建后的 JS（注意：* 是构建后的哈希值，Jekyll 会自动匹配） -->
-  <script type="module" src="/assets/static/index-*.js"></script>
+<body class="bg-gray-50 font-sans text-gray-800">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-primary to-secondary text-white shadow-lg">
+            <div class="container mx-auto px-4 py-6">
+                <h1 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-shadow">Wanshu Jiang</h1>
+                <p class="text-blue-100 mt-1 text-[clamp(1rem,2vw,1.2rem)]">Cognitive Systems | Biomedical Engineering</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Profile Section -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                        <div class="relative">
+                            <img src="https://picsum.photos/seed/profile/600/300" alt="Profile cover" class="w-full h-40 object-cover">
+                            <div class="absolute -bottom-16 left-6">
+                                <img src="https://picsum.photos/seed/wanshu/200/200" alt="Wanshu Jiang" class="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover">
+                            </div>
+                        </div>
+                        <div class="pt-20 pb-6 px-6">
+                            <h2 class="text-2xl font-bold text-center mb-1">Wanshu Jiang</h2>
+                            <p class="text-gray-600 text-center mb-4">Master Student in Cognitive Systems</p>
+                            
+                            <div class="space-y-3 mt-6">
+                                <div class="flex items-center">
+                                    <i class="fa fa-map-marker text-primary w-5"></i>
+                                    <span class="ml-3">Manfred-Börner Straße 5, 89081 Ulm, Germany</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fa fa-phone text-primary w-5"></i>
+                                    <span class="ml-3">+49 1624830759</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fa fa-envelope text-primary w-5"></i>
+                                    <span class="ml-3">wanshu212@gmail.com</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabs Section -->
+                    <div class="bg-white rounded-xl shadow-md mt-6 overflow-hidden">
+                        <div class="border-b">
+                            <button id="tab-resume" class="tab-button active py-4 px-6 inline-block font-medium text-primary border-b-2 border-primary">
+                                <i class="fa fa-file-text-o mr-2"></i>Resume
+                            </button>
+                            <button id="tab-skills" class="tab-button py-4 px-6 inline-block font-medium text-gray-500 hover:text-primary transition-colors">
+                                <i class="fa fa-cogs mr-2"></i>Skills
+                            </button>
+                        </div>
+                        
+                        <div id="content-resume" class="tab-content p-6">
+                            <h3 class="text-xl font-bold mb-4 text-gray-800 border-b pb-2">Ausbildung</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between">
+                                        <h4 class="font-semibold">Master of Science, Cognitive Systems</h4>
+                                        <span class="text-sm text-gray-500">10/2023– present</span>
+                                    </div>
+                                    <p class="text-gray-600">Universität Ulm, Ulm, Deutschland</p>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between">
+                                        <h4 class="font-semibold">Bachelor of Science, Biomedical Engineering</h4>
+                                        <span class="text-sm text-gray-500">08/2019–07/2023</span>
+                                    </div>
+                                    <p class="text-gray-600">Southeast University, Nanjing, VR China</p>
+                                    <p class="text-sm text-gray-500">Fokus: Bioinformatik</p>
+                                </div>
+                            </div>
+
+                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-800 border-b pb-2">Praktikumserfahrung</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between">
+                                        <h4 class="font-semibold">HiWi für Analyse von Atomabsorptionssignaldaten</h4>
+                                        <span class="text-sm text-gray-500">05/2025–07/2025</span>
+                                    </div>
+                                    <p class="text-gray-600">Universität Ulm, Ulm, Deutschland</p>
+                                    <ul class="list-disc list-inside text-gray-600 text-sm mt-1 space-y-1">
+                                        <li>Entwickelte automatisierte Toolchains in Python zur Analyse von AAS-Signalen</li>
+                                        <li>Nutzung von Parallelisierung & Batch-Prozessen zur Effizienzsteigerung</li>
+                                        <li>Dokumentation der Abläufe und Übergabe als CI-fähige Skripte</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between">
+                                        <h4 class="font-semibold">Belt and Road Informationsanalyse- und Monitoringsystem</h4>
+                                        <span class="text-sm text-gray-500">07/2024–09/2024</span>
+                                    </div>
+                                    <p class="text-gray-600">Southeast University, Nanjing, VR China</p>
+                                    <ul class="list-disc list-inside text-gray-600 text-sm mt-1 space-y-1">
+                                        <li>Internationales Monitoringsystem auf Dify-Basis entwickelt</li>
+                                        <li>Module für Multi-Source-Datenerfassung und Textverarbeitung umgesetzt</li>
+                                        <li>LLM-basierte Pipeline zur automatischen Klassifikation implementiert</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h3 class="text-xl font-bold mt-6 mb-4 text-gray-800 border-b pb-2">Projekterfahrung</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between">
+                                        <h4 class="font-semibold">Automatisierte Rechnungsverarbeitung mit n8n & LLM</h4>
+                                        <span class="text-sm text-gray-500">04/2024–06/2024</span>
+                                    </div>
+                                    <ul class="list-disc list-inside text-gray-600 text-sm mt-1 space-y-1">
+                                        <li>Automatischer n8n-Workflow zur Überwachung von Rechnungs-E-Mails</li>
+                                        <li>Implementierung einer KI-basierten Pipeline mit Google Gemini</li>
+                                        <li>Aufbau eines End-to-End-Prozesses von E-Mail-Filterung bis Excel-Export</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="content-skills" class="tab-content p-6 hidden">
+                            <h3 class="text-xl font-bold mb-4 text-gray-800 border-b pb-2">Technische Fähigkeiten</h3>
+                            
+                            <div class="space-y-6">
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-3 flex items-center">
+                                        <i class="fa fa-code text-primary mr-2"></i>Programming & Scripting
+                                    </h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Python</span>
+                                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">JavaScript</span>
+                                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">SQL</span>
+                                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">C++</span>
+                                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">MATLAB</span>
+                                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">PHP</span>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-3 flex items-center">
+                                        <i class="fa fa-wrench text-primary mr-2"></i>Frameworks & Tools
+                                    </h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">React</span>
+                                        <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Node.js</span>
+                                        <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Git (CI/CD)</span>
+                                        <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">n8n</span>
+                                        <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Dify</span>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-3 flex items-center">
+                                        <i class="fa fa-bar-chart text-primary mr-2"></i>Data Analysis & Machine Learning
+                                    </h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">TensorFlow</span>
+                                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">PyTorch</span>
+                                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Pandas</span>
+                                        <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Power BI</span>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-semibold text-lg mb-3 flex items-center">
+                                        <i class="fa fa-comments text-primary mr-2"></i>Sprachen
+                                    </h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">Deutsch (fließend)</span>
+                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">Englisch (fließend)</span>
+                                        <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">Chinesisch (Muttersprache)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chatbot Section -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden h-full flex flex-col">
+                        <div class="bg-primary text-white p-4">
+                            <h2 class="text-xl font-bold flex items-center">
+                                <i class="fa fa-comments-o mr-2"></i>Career Chatbot
+                            </h2>
+                            <p class="text-blue-100 text-sm mt-1">Ask me anything about Wanshu's career</p>
+                        </div>
+                        
+                        <div id="chat-messages" class="flex-grow p-4 overflow-y-auto scrollbar-hide space-y-4">
+                            <!-- Bot greeting -->
+                            <div class="flex items-start">
+                                <div class="bg-primary rounded-full p-2 text-white mr-3">
+                                    <i class="fa fa-robot"></i>
+                                </div>
+                                <div class="bg-gray-100 rounded-lg rounded-tl-none px-4 py-3 max-w-[80%]">
+                                    <p>Hello! I'm here to answer questions about Wanshu Jiang's education, work experience, and skills. Feel free to ask me anything related to her career.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t p-4">
+                            <div class="mb-4">
+                                <p class="text-sm text-gray-500 mb-2">Example questions:</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <button class="example-question px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition-colors">What is Wanshu studying?</button>
+                                    <button class="example-question px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition-colors">What programming languages does she know?</button>
+                                    <button class="example-question px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm hover:bg-blue-100 transition-colors">Where did she work?</button>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-2">
+                                <input type="text" id="user-input" placeholder="Type your question here..." class="flex-grow px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <button id="send-button" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-colors">
+                                    <i class="fa fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-white py-6">
+            <div class="container mx-auto px-4 text-center">
+                <p>&copy; 2023 Wanshu Jiang. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Tab functionality
+        document.getElementById('tab-resume').addEventListener('click', function() {
+            document.getElementById('content-resume').classList.remove('hidden');
+            document.getElementById('content-skills').classList.add('hidden');
+            document.getElementById('tab-resume').classList.add('active', 'text-primary', 'border-primary', 'border-b-2');
+            document.getElementById('tab-skills').classList.remove('active', 'text-primary', 'border-primary', 'border-b-2');
+            document.getElementById('tab-skills').classList.add('text-gray-500');
+        });
+
+        document.getElementById('tab-skills').addEventListener('click', function() {
+            document.getElementById('content-skills').classList.remove('hidden');
+            document.getElementById('content-resume').classList.add('hidden');
+            document.getElementById('tab-skills').classList.add('active', 'text-primary', 'border-primary', 'border-b-2');
+            document.getElementById('tab-resume').classList.remove('active', 'text-primary', 'border-primary', 'border-b-2');
+            document.getElementById('tab-resume').classList.add('text-gray-500');
+        });
+
+        // Chat functionality
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const exampleQuestions = document.querySelectorAll('.example-question');
+
+        // Add example question functionality
+        exampleQuestions.forEach(button => {
+            button.addEventListener('click', () => {
+                userInput.value = button.textContent;
+                sendMessage();
+            });
+        });
+
+        // Send message when button is clicked
+        sendButton.addEventListener('click', sendMessage);
+
+        // Send message when Enter key is pressed
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            // Add user message to chat
+            addMessageToChat(message, 'user');
+            
+            // Clear input
+            userInput.value = '';
+            
+            // Show typing indicator
+            const typingIndicator = addTypingIndicator();
+            
+            // Send request to Cloudflare Worker
+            fetch('https://wanshu-chatbot-worker.creaaa304.workers.dev', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Remove typing indicator
+                typingIndicator.remove();
+                
+                // Add bot response to chat
+                addMessageToChat(data.response, 'bot');
+            })
+            .catch(error => {
+                // Remove typing indicator
+                typingIndicator.remove();
+                
+                // Add error message
+                addMessageToChat('Sorry, there was an error processing your request. Please try again later.', 'bot');
+                console.error('Error:', error);
+            });
+        }
+
+        function addMessageToChat(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex items-start ${sender === 'user' ? 'justify-end' : ''}`;
+            
+            if (sender === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="bg-primary text-white rounded-lg rounded-tr-none px-4 py-3 max-w-[80%]">
+                        <p>${message}</p>
+                    </div>
+                    <div class="bg-gray-200 rounded-full p-2 text-gray-700 ml-3">
+                        <i class="fa fa-user"></i>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="bg-primary rounded-full p-2 text-white mr-3">
+                        <i class="fa fa-robot"></i>
+                    </div>
+                    <div class="bg-gray-100 rounded-lg rounded-tl-none px-4 py-3 max-w-[80%]">
+                        <p>${message}</p>
+                    </div>
+                `;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function addTypingIndicator() {
+            const indicatorDiv = document.createElement('div');
+            indicatorDiv.className = 'flex items-start';
+            indicatorDiv.innerHTML = `
+                <div class="bg-primary rounded-full p-2 text-white mr-3">
+                    <i class="fa fa-robot"></i>
+                </div>
+                <div class="bg-gray-100 rounded-lg rounded-tl-none px-4 py-3 max-w-[80%]">
+                    <div class="flex space-x-1">
+                        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
+                        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                        <div class="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+                    </div>
+                </div>
+            `;
+            
+            chatMessages.appendChild(indicatorDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            return indicatorDiv;
+        }
+    </script>
 </body>
 </html>
